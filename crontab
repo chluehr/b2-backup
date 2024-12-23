@@ -1,0 +1,4 @@
+# crontab 
+
+@daily /root/backup.sh
+
