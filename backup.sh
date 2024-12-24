@@ -11,6 +11,7 @@
 #
 # Set the following environment variables:
 # - BACKUPS=<NAME1>:<PATH1>[,<NAME2>:<PATH2>]
+# - EXCLUDE_REGEX=
 # - B2_BUCKET=
 # - B2_APPLICATION_KEY_ID=
 # - B2_APPLICATION_KEY=
@@ -29,7 +30,7 @@ IFS=','
 for item in $BACKUPS; do
   IFS=':' read -r BACKUP_NAME BACKUP_PATH <<< "$item"
   echo "Backup: $BACKUP_NAME [$BACKUP_PATH] - $BACKUP_DATE"
-  b2v4 sync $BACKUP_PATH "b2://$B2_BUCKET/$BACKUP_NAME/$BACKUP_DATE"
+  b2v4 sync --exclude-regex "$EXCLUDE_REGEX" $BACKUP_PATH "b2://$B2_BUCKET/$BACKUP_NAME/$BACKUP_DATE"
 done
 
 echo -n "BACKUP END: "
